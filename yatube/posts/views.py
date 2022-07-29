@@ -1,9 +1,13 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Post, Group
+from django.shortcuts import get_object_or_404, render
+
+from .models import Group, Post
+
+NUM_OF_OBJECTS = 10
 
 
 def index(request):
-    posts = Post.objects.order_by('-pub_date')[:10]
+    """ View-функция основной страницы"""
+    posts = Post.objects.order_by('-pub_date')[:NUM_OF_OBJECTS]
     template = 'posts/index.html'
     context = {
         'posts': posts,
@@ -11,10 +15,10 @@ def index(request):
     return render(request, template, context)
 
 
-# View-функция для страницы сообщества:
 def group_posts(request, slug):
+    """View-функция для страницы сообщества:"""
     group = get_object_or_404(Group, slug=slug)
-    posts = Post.objects.filter(group=group).order_by('-pub_date')[:10]
+    posts = group.posts.all()[:NUM_OF_OBJECTS]
     context = {
         'group': group,
         'posts': posts,
