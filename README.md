@@ -1,4 +1,4 @@
-# hw02_community
+# yatube-project
 
 ## Описание проекта: 
 
